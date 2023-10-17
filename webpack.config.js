@@ -2,17 +2,21 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+
 const isProduction = process.env.NODE_ENV == 'production';
+
 
 
 const stylesHandler = MiniCssExtractPlugin.loader;
 
-const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 
 const config = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'build'),
+        filename: 'js/[name].[contenthash].js',
         clean: true
     },
     devServer: {
@@ -26,26 +30,15 @@ const config = {
                 test: /\.js(\?.*)?$/i,
             }),
         ],
+        runtimeChunk: 'single',
         splitChunks: {
-            chunks: 'async',
-            minSize: 20000,
-            minRemainingSize: 0,
-            minChunks: 1,
-            maxAsyncRequests: 30,
-            maxInitialRequests: 30,
-            enforceSizeThreshold: 50000,
             cacheGroups: {
-                defaultVendors: {
+                vendor: {
                     test: /[\\/]node_modules[\\/]/,
-                    priority: -10,
-                    reuseExistingChunk: true,
-                },
-                default: {
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true,
-                },
-            },
+                    name: 'vendors',
+                    chunks: 'all'
+                }
+            }
         }
     },
 
@@ -55,7 +48,22 @@ const config = {
             template: 'public/index.html',
         }),
 
-        new MiniCssExtractPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "css/[name].css",
+            chunkFilename: "css/[id].css",
+        }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: "public/**/*",
+                    globOptions: {
+                        dot: true,
+                        gitignore: true,
+                        ignore: ['**/index.html'],
+                    },
+                },
+            ],
+        }),
     ],
     module: {
         rules: [
