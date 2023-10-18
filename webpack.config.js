@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -23,24 +24,7 @@ const config = {
         open: true,
         host: 'localhost',
     },
-    optimization: {
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                test: /\.js(\?.*)?$/i,
-            }),
-        ],
-        runtimeChunk: 'single',
-        splitChunks: {
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all'
-                }
-            }
-        }
-    },
+
 
     plugins: [
         new HtmlWebpackPlugin({
@@ -64,6 +48,11 @@ const config = {
                 },
             ],
         }),
+        new Dotenv({
+            path: "./.env",
+            safe: true,
+            defaults: true,
+        })
     ],
     module: {
         rules: [
@@ -93,10 +82,10 @@ const config = {
                 test: /\.s[ac]ss$/i,
                 use: [stylesHandler, 'css-loader', 'sass-loader'],
             },
-            {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-                type: 'asset',
-            },
+            // {
+            //     test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+            //     type: 'asset',
+            // },
         ],
     },
     resolve: {
@@ -108,6 +97,26 @@ module.exports = () =>
 {
     if (isProduction) {
         config.mode = 'production';
+        config.optimization = {
+
+            minimize: true,
+            minimizer: [
+                new TerserPlugin({
+                    test: /\.js(\?.*)?$/i,
+                }),
+            ],
+            runtimeChunk: 'single',
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all'
+                    }
+                }
+
+            }
+        }
 
 
     } else {
