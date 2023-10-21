@@ -33,7 +33,7 @@ class Characters implements ICharectersComponent {
         this.state.data.map(element => {
             const {id, name, status, image} = element;
             return (
-                new Card(this.list, name, image).createElement()
+                new Card(this.list, name, image, id).render()
             )
         })
       
