@@ -1,14 +1,12 @@
 import "./App.scss"
-import {url} from "../../constants/index";
-import {TypeUrl} from "../../types/index";
-import {GetDataApi} from "../../utils/index"
+import Characters from "../characters"
 
 
 class App {
-     async render () {
-        const data = await GetDataApi.getDataCharacters(`${url}/${TypeUrl.character}`)
-        console.log(data)
-    }
+    
+   async render() {
+    await Characters.render()
+   } 
 }
 
 export default new  App();

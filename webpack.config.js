@@ -6,13 +6,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
 
 const isProduction = process.env.NODE_ENV == 'production';
-
-
-
 const stylesHandler = MiniCssExtractPlugin.loader;
-
-
-
 const config = {
     entry: './src/index.ts',
     output: {
@@ -82,10 +76,10 @@ const config = {
                 test: /\.s[ac]ss$/i,
                 use: [stylesHandler, 'css-loader', 'sass-loader'],
             },
-            // {
-            //     test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-            //     type: 'asset',
-            // },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+                type: 'asset',
+            },
         ],
     },
     resolve: {

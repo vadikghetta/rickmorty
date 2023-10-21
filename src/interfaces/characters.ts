@@ -1,7 +1,7 @@
 import {IRoot} from "./index"
 
 
-export interface ICharacterResults extends IRoot<ICharacterResults> {}
+export interface ICharacterResults extends IRoot<IResultCharacter> {}
 
 export interface IResultCharacter {
     id: number
