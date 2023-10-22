@@ -1,5 +1,6 @@
 import { TypeUrl } from "../../types";
-import {URL} from "../../constants"
+import {URL} from "../../constants";
+
 
 interface ICardInterface {
    card : Element
@@ -18,10 +19,9 @@ class Card implements ICardInterface {
         this.parent = parent;
         this.name = name;
         this.imageSrc = imageSrc;
-        this.card = document.createElement("li")
-        this.img = document.createElement("img")
-        this.title = document.createElement("h3")
-       
+        this.card = document.createElement("li");
+        this.img = document.createElement("img");
+        this.title = document.createElement("h3");
     }
 
     bindListners() {
