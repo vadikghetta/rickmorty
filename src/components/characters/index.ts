@@ -17,14 +17,18 @@ interface ICharectersComponent {
 
 
 class Characters implements ICharectersComponent {
+    private container = document.createElement("div");
+    private list = document.createElement("ul");
     state = {
         data : [] as IResultCharacter[] | []
     };
-    private list = document.createElement("ul");
 
     renderCharaCters (data : IResultCharacter[]) {
-        this.list.classList.add("wrapper")
-        ROOT_INDEX.appendChild(this.list);
+
+        this.list.classList.add("wrapper");
+        this.container.classList.add("container")
+        this.container.appendChild(this.list)
+        ROOT_INDEX.appendChild(this.container);
         this.updateData(data)
         this.state.data.map(element => {
             const {id, name, status, image} = element;

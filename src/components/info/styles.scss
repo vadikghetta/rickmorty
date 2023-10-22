@@ -27,4 +27,30 @@
     &__list {
         color: #000;
     }
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    &__close {
+        width: 40px;
+        height: 40px;
+        position: relative;
+        background: none;
+        border: none;
+        cursor: pointer;
+        div {
+            position: absolute;
+            background-color: #000;
+            width: 30px;
+            height: 3px;
+            &:first-child {
+                transform: rotate(135deg);
+            }
+            &:last-child {
+                transform: rotate(225deg);
+            }
+        }
+    }
 }

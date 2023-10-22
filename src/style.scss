@@ -2,6 +2,8 @@
 
 *,::after,::before {
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 body {
     padding: 0;
@@ -12,4 +14,8 @@ body {
 }
 ul {
     list-style-type: none;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
