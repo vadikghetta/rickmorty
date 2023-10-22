@@ -1,3 +1,4 @@
+import "./styles.scss"
 import { TypeUrl } from "../../types";
 import {URL} from "../../constants";
 
@@ -40,6 +41,7 @@ class Card implements ICardInterface {
         this.img.alt = this.name;
         this.card.appendChild(this.title)
         this.card.appendChild(this.img)
+        this.card.classList.add("card")
         this.parent.appendChild(this.card)
     }
     render ()  {

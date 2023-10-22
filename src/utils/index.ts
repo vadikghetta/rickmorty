@@ -7,11 +7,7 @@ export class GetDataApi {
          const {data} =  await axios.get<ICharacterResults>(url)
          return data;
       }catch(e) {
-         if(axios.isAxiosError(e)) {
-             
-             throw new Error(e.message)
-           
-         }
+        console.log(e)
       }
      }
  }

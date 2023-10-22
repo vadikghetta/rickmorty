@@ -1,10 +1,11 @@
 import "./comics.scss"
 import { IResultCharacter } from './../../interfaces/characters';
-import {URL} from "../../constants/index";
-import {TypeUrl} from "../../types/index";
-import {GetDataApi} from "../../utils/index";
+import {URL} from "../../constants";
+import {TypeUrl} from "../../types";
+import {GetDataApi} from "../../utils";
 import {ROOT_INDEX} from "../../constants";
 import Card from "../card"
+import ErrorComponent from "../error";
 
 
 interface ICharectersComponent {
@@ -21,23 +22,33 @@ class Characters implements ICharectersComponent {
     };
     private list = document.createElement("ul");
 
-   updateData (data : IResultCharacter[]) {
-        this.state.data = data
-   } 
-    async render () {
+    renderCharaCters (data : IResultCharacter[]) {
         this.list.classList.add("wrapper")
         ROOT_INDEX.appendChild(this.list);
-        const {results} = await GetDataApi.getDataCharacters(`${URL}/${TypeUrl.character}`)
-       if(results) {
-        this.updateData(results)
+        this.updateData(data)
         this.state.data.map(element => {
             const {id, name, status, image} = element;
             return (
                 new Card(this.list, name, image, id).render()
             )
         })
-      
-       }
+    }
+
+   updateData (data : IResultCharacter[]) {
+        this.state.data = data
+   } 
+
+
+    async render () {
+       
+        const data = await GetDataApi.getDataCharacters(`${URL}/${TypeUrl.character}`)
+        if(data) {
+            const {results} = data;
+            this.renderCharaCters(results);
+           
+        }else {
+            ErrorComponent.render()
+        }
        
     }
 }
