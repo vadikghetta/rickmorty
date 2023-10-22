@@ -1,6 +1,7 @@
 import "./styles.scss"
 import { TypeUrl } from "../../types";
 import {URL} from "../../constants";
+import Info from "../info"
 
 
 interface ICardInterface {
@@ -30,7 +31,7 @@ class Card implements ICardInterface {
     }
     click(id : number) {
         const url = `${URL}${TypeUrl.character}/${id}`;
-        console.log(url)
+        Info.render(url)
     }
     
     createCard () {
